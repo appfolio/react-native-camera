@@ -31,6 +31,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
+import com.google.android.cameraview.CameraView;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 public class RCTCameraModule extends ReactContextBaseJavaModule
-    implements MediaRecorder.OnInfoListener, MediaRecorder.OnErrorListener, LifecycleEventListener {
+        implements MediaRecorder.OnInfoListener, MediaRecorder.OnErrorListener, LifecycleEventListener {
     private static final String TAG = "RCTCameraModule";
 
     public static final int RCT_CAMERA_ASPECT_FILL = 0;
@@ -96,7 +97,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
     }
 
     public static ReactApplicationContext getReactContextSingleton() {
-      return _reactContext;
+        return _reactContext;
     }
 
     /**
@@ -613,27 +614,9 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void capture(final ReadableMap options, final Promise promise) {
-        int orientation = options.hasKey("orientation") ? options.getInt("orientation") : RCTCamera.getInstance().getOrientation();
-        if (orientation == RCT_CAMERA_ORIENTATION_AUTO) {
-            _sensorOrientationChecker.onResume();
-            _sensorOrientationChecker.registerOrientationListener(new RCTSensorOrientationListener() {
-                @Override
-                public void orientationEvent() {
-                    int deviceOrientation = _sensorOrientationChecker.getOrientation();
-                    _sensorOrientationChecker.unregisterOrientationListener();
-                    _sensorOrientationChecker.onPause();
-                    captureWithOrientation(options, promise, deviceOrientation);
-                }
-            });
-        } else {
-            captureWithOrientation(options, promise, orientation);
-        }
-    }
-
-    private void captureWithOrientation(final ReadableMap options, final Promise promise, int deviceOrientation) {
-        Camera camera = RCTCamera.getInstance().acquireCameraInstance(options.getInt("type"));
-        if (null == camera) {
-            promise.reject("No camera found.");
+        CameraView cameraView = RCTCameraViewManager.getCameraView();
+        if (null == cameraView) {
+            promise.reject("No cameraView found.");
             return;
         }
 
@@ -642,24 +625,21 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
             return;
         }
 
-        RCTCamera.getInstance().setCaptureQuality(options.getInt("type"), options.getString("quality"));
-
         if (options.hasKey("playSoundOnCapture") && options.getBoolean("playSoundOnCapture")) {
             MediaActionSound sound = new MediaActionSound();
             sound.play(MediaActionSound.SHUTTER_CLICK);
         }
 
         if (options.hasKey("quality")) {
-            RCTCamera.getInstance().setCaptureQuality(options.getInt("type"), options.getString("quality"));
+            RCTCameraViewManager.getInstance().setCaptureQuality(cameraView, options.getString("quality"));
         }
 
         final Boolean shouldMirror = options.hasKey("mirrorImage") && options.getBoolean("mirrorImage");
 
-        RCTCamera.getInstance().adjustCameraRotationToDeviceOrientation(options.getInt("type"), deviceOrientation);
-        camera.setPreviewCallback(null);
-        camera.takePicture(null, null, new Camera.PictureCallback() {
+        cameraView.addCallback(new CameraView.Callback() {
             @Override
-            public void onPictureTaken(byte[] data, Camera camera) {
+            public void onPictureTaken(CameraView cameraView, byte[] data) {
+                cameraView.removeCallback(this);
 
                 if (shouldMirror) {
                     data = mirrorImage(data);
@@ -670,8 +650,6 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
 
                 data = fixOrientation(data);
 
-                camera.stopPreview();
-                camera.startPreview();
                 WritableMap response = new WritableNativeMap();
                 switch (options.getInt("target")) {
                     case RCT_CAMERA_CAPTURE_TARGET_MEMORY:
@@ -726,6 +704,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
                         Throwable error = writeDataToFile(data, tempFile);
                         if (error != null) {
                             promise.reject(error);
+                            return;
                         }
 
                         rewriteOrientation(tempFile.getAbsolutePath());
@@ -735,7 +714,11 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
                     }
                 }
             }
+
+
         });
+
+        cameraView.takePicture();
     }
 
     @ReactMethod
