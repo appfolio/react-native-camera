@@ -546,7 +546,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
             }
         };
 
-        if(mSafeToCapture) {
+        if (mSafeToCapture) {
           try {
             camera.takePicture(null, null, captureCallback);
             mSafeToCapture = false;
@@ -565,6 +565,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
             mutableImage.fixOrientation();
         } catch (MutableImage.ImageMutationFailedException e) {
             promise.reject("Error mirroring image", e);
+            return;
         }
         
         if (shouldMirror) {
@@ -572,11 +573,12 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
                 mutableImage.mirrorImage();
             } catch (MutableImage.ImageMutationFailedException e) {
                 promise.reject("Error mirroring image", e);
+                return;
             }
         }
 
         int jpegQualityPercent = 80;
-        if(options.hasKey("jpegQuality")) {
+        if (options.hasKey("jpegQuality")) {
             jpegQualityPercent = options.getInt("jpegQuality");
         }
 
