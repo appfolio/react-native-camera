@@ -16,6 +16,7 @@
 #import <AssetsLibrary/ALAssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
 #import <ImageIO/ImageIO.h>
+#import <Photos/Photos.h>
 #import "RCTCameraManager.h"
 #import "RCTCamera.h"
 #import "RCTSensorOrientationChecker.h"
@@ -694,8 +695,10 @@ RCT_EXPORT_METHOD(hasFlash:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRej
   else if (target == RCTCameraCaptureTargetCameraRoll) {
     [[[ALAssetsLibrary alloc] init] writeImageDataToSavedPhotosAlbum:imageData metadata:metadata completionBlock:^(NSURL* url, NSError* error) {
       if (error == nil) {
+        PHFetchResult *fetchResult = [PHAsset fetchAssetsWithALAssetURLs:@[url] options:nil];
+        PHAsset *lastImageAsset = [fetchResult firstObject];
         //path isn't really applicable here (this is an asset uri), but left it in for backward comparability
-        resolve(@{@"path":[url absoluteString], @"mediaUri":[url absoluteString]});
+        resolve(@{@"path":[url absoluteString], @"mediaUri":[url absoluteString], @"id":lastImageAsset.localIdentifier});
       }
       else {
         reject(RCTErrorUnspecified, nil, RCTErrorWithMessage(error.description));
