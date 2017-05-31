@@ -245,7 +245,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        processImage(new MutableImage(data), shouldMirror, options, promise);
+                        processImage(new MutableImage(data), options, promise);
                     }
                 });
 
@@ -274,7 +274,8 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             promise.reject("Error mirroring image", e);
             return;
         }
-        
+
+        boolean shouldMirror = options.hasKey("mirrorImage") && options.getBoolean("mirrorImage");
         if (shouldMirror) {
             try {
                 mutableImage.mirrorImage();
