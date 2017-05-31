@@ -235,8 +235,6 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             RCTCameraViewManager.getInstance().setCaptureQuality(cameraView, options.getString("quality"));
         }
 
-        final Boolean shouldMirror = options.hasKey("mirrorImage") && options.getBoolean("mirrorImage");
-
         cameraView.addCallback(new CameraView.Callback() {
             @Override
             public void onPictureTaken(CameraView cameraView, final byte[] data) {
@@ -267,7 +265,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
      * synchronized in order to prevent the user crashing the app by taking many photos and them all being processed
      * concurrently which would blow the memory (esp on smaller devices), and slow things down.
      */
-    private synchronized void processImage(MutableImage mutableImage, Boolean shouldMirror, ReadableMap options, Promise promise) {
+    private synchronized void processImage(MutableImage mutableImage, ReadableMap options, Promise promise) {
         try {
             mutableImage.fixOrientation();
         } catch (MutableImage.ImageMutationFailedException e) {
