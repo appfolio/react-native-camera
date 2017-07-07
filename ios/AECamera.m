@@ -14,19 +14,19 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-#import "RCTCamera.h"
-#import "RCTCameraManager.h"
+#import "AECamera.h"
+#import "AECameraManager.h"
 #import "CameraFocusSquare.h"
 
-@interface RCTCamera ()
+@interface AECamera ()
 
-@property (nonatomic, weak) RCTCameraManager *manager;
+@property (nonatomic, weak) AECameraManager *manager;
 @property (nonatomic, weak) RCTBridge *bridge;
-@property (nonatomic, strong) RCTCameraFocusSquare *camFocus;
+@property (nonatomic, strong) AECameraFocusSquare *camFocus;
 
 @end
 
-@implementation RCTCamera
+@implementation AECamera
 {
   BOOL _multipleTouches;
   BOOL _onFocusChanged;
@@ -39,7 +39,7 @@
 {
   [self.manager changeOrientation:orientation];
 
-  if (orientation == RCTCameraOrientationAuto) {
+  if (orientation == AECameraOrientationAuto) {
     [self changePreviewOrientation:[UIApplication sharedApplication].statusBarOrientation];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
   }
@@ -70,9 +70,9 @@
   }
 }
 
-- (id)initWithManager:(RCTCameraManager*)manager bridge:(RCTBridge *)bridge
+- (id)initWithManager:(AECameraManager *)manager bridge:(RCTBridge *)bridge
 {
-  
+
   if ((self = [super init])) {
     self.manager = manager;
     self.bridge = bridge;
@@ -160,7 +160,7 @@
 
         // Show animated rectangle on the touched area
         if (_defaultOnFocusComponent) {
-            self.camFocus = [[RCTCameraFocusSquare alloc]initWithFrame:CGRectMake(touchPoint.x-40, touchPoint.y-40, 80, 80)];
+            self.camFocus = [[AECameraFocusSquare alloc]initWithFrame:CGRectMake(touchPoint.x-40, touchPoint.y-40, 80, 80)];
             [self.camFocus setBackgroundColor:[UIColor clearColor]];
             [self addSubview:self.camFocus];
             [self.camFocus setNeedsDisplay];

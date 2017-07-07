@@ -3,7 +3,7 @@
  * Android video recording support by Marc Johnson (me@marc.mn) 4/2016
  */
 
-package com.lwansbrough.RCTCamera;
+package com.appfolio.react.camera;
 
 import android.media.*;
 import android.net.Uri;
@@ -30,38 +30,38 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-public class RCTCameraModule extends ReactContextBaseJavaModule {
-    private static final String TAG = "RCTCameraModule";
+public class CameraModule extends ReactContextBaseJavaModule {
+    private static final String TAG = "AECameraModule";
 
-    public static final int RCT_CAMERA_ASPECT_FILL = 0;
-    public static final int RCT_CAMERA_ASPECT_FIT = 1;
-    public static final int RCT_CAMERA_ASPECT_STRETCH = 2;
-    public static final int RCT_CAMERA_CAPTURE_MODE_STILL = 0;
-    public static final int RCT_CAMERA_CAPTURE_MODE_VIDEO = 1;
-    public static final int RCT_CAMERA_CAPTURE_TARGET_MEMORY = 0;
-    public static final int RCT_CAMERA_CAPTURE_TARGET_DISK = 1;
-    public static final int RCT_CAMERA_CAPTURE_TARGET_CAMERA_ROLL = 2;
-    public static final int RCT_CAMERA_CAPTURE_TARGET_TEMP = 3;
-    public static final int RCT_CAMERA_ORIENTATION_AUTO = Integer.MAX_VALUE;
-    public static final int RCT_CAMERA_ORIENTATION_PORTRAIT = Surface.ROTATION_0;
-    public static final int RCT_CAMERA_ORIENTATION_PORTRAIT_UPSIDE_DOWN = Surface.ROTATION_180;
-    public static final int RCT_CAMERA_ORIENTATION_LANDSCAPE_LEFT = Surface.ROTATION_90;
-    public static final int RCT_CAMERA_ORIENTATION_LANDSCAPE_RIGHT = Surface.ROTATION_270;
-    public static final int RCT_CAMERA_TYPE_FRONT = 1;
-    public static final int RCT_CAMERA_TYPE_BACK = 2;
-    public static final int RCT_CAMERA_FLASH_MODE_OFF = 0;
-    public static final int RCT_CAMERA_FLASH_MODE_ON = 1;
-    public static final int RCT_CAMERA_FLASH_MODE_AUTO = 2;
-    public static final int RCT_CAMERA_TORCH_MODE_OFF = 0;
-    public static final int RCT_CAMERA_TORCH_MODE_ON = 1;
-    public static final int RCT_CAMERA_TORCH_MODE_AUTO = 2;
-    public static final String RCT_CAMERA_CAPTURE_QUALITY_PREVIEW = "preview";
-    public static final String RCT_CAMERA_CAPTURE_QUALITY_HIGH = "high";
-    public static final String RCT_CAMERA_CAPTURE_QUALITY_MEDIUM = "medium";
-    public static final String RCT_CAMERA_CAPTURE_QUALITY_LOW = "low";
-    public static final String RCT_CAMERA_CAPTURE_QUALITY_1080P = "1080p";
-    public static final String RCT_CAMERA_CAPTURE_QUALITY_720P = "720p";
-    public static final String RCT_CAMERA_CAPTURE_QUALITY_480P = "480p";
+    public static final int AE_CAMERA_ASPECT_FILL = 0;
+    public static final int AE_CAMERA_ASPECT_FIT = 1;
+    public static final int AE_CAMERA_ASPECT_STRETCH = 2;
+    public static final int AE_CAMERA_CAPTURE_MODE_STILL = 0;
+    public static final int AE_CAMERA_CAPTURE_MODE_VIDEO = 1;
+    public static final int AE_CAMERA_CAPTURE_TARGET_MEMORY = 0;
+    public static final int AE_CAMERA_CAPTURE_TARGET_DISK = 1;
+    public static final int AE_CAMERA_CAPTURE_TARGET_CAMERA_ROLL = 2;
+    public static final int AE_CAMERA_CAPTURE_TARGET_TEMP = 3;
+    public static final int AE_CAMERA_ORIENTATION_AUTO = Integer.MAX_VALUE;
+    public static final int AE_CAMERA_ORIENTATION_PORTRAIT = Surface.ROTATION_0;
+    public static final int AE_CAMERA_ORIENTATION_PORTRAIT_UPSIDE_DOWN = Surface.ROTATION_180;
+    public static final int AE_CAMERA_ORIENTATION_LANDSCAPE_LEFT = Surface.ROTATION_90;
+    public static final int AE_CAMERA_ORIENTATION_LANDSCAPE_RIGHT = Surface.ROTATION_270;
+    public static final int AE_CAMERA_TYPE_FRONT = 1;
+    public static final int AE_CAMERA_TYPE_BACK = 2;
+    public static final int AE_CAMERA_FLASH_MODE_OFF = 0;
+    public static final int AE_CAMERA_FLASH_MODE_ON = 1;
+    public static final int AE_CAMERA_FLASH_MODE_AUTO = 2;
+    public static final int AE_CAMERA_TORCH_MODE_OFF = 0;
+    public static final int AE_CAMERA_TORCH_MODE_ON = 1;
+    public static final int AE_CAMERA_TORCH_MODE_AUTO = 2;
+    public static final String AE_CAMERA_CAPTURE_QUALITY_PREVIEW = "preview";
+    public static final String AE_CAMERA_CAPTURE_QUALITY_HIGH = "high";
+    public static final String AE_CAMERA_CAPTURE_QUALITY_MEDIUM = "medium";
+    public static final String AE_CAMERA_CAPTURE_QUALITY_LOW = "low";
+    public static final String AE_CAMERA_CAPTURE_QUALITY_1080P = "1080p";
+    public static final String AE_CAMERA_CAPTURE_QUALITY_720P = "720p";
+    public static final String AE_CAMERA_CAPTURE_QUALITY_480P = "480p";
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
 
@@ -69,7 +69,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
 
     private Boolean mSafeToCapture = true;
 
-    public RCTCameraModule(ReactApplicationContext reactContext) {
+    public CameraModule(ReactApplicationContext reactContext) {
         super(reactContext);
         _reactContext = reactContext;
     }
@@ -80,7 +80,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "RCTCameraModule";
+        return "AECameraModule";
     }
 
     @Nullable
@@ -102,9 +102,9 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             private Map<String, Object> getAspectConstants() {
                 return Collections.unmodifiableMap(new HashMap<String, Object>() {
                     {
-                        put("stretch", RCT_CAMERA_ASPECT_STRETCH);
-                        put("fit", RCT_CAMERA_ASPECT_FIT);
-                        put("fill", RCT_CAMERA_ASPECT_FILL);
+                        put("stretch", AE_CAMERA_ASPECT_STRETCH);
+                        put("fit", AE_CAMERA_ASPECT_FIT);
+                        put("fill", AE_CAMERA_ASPECT_FILL);
                     }
                 });
             }
@@ -120,8 +120,8 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             private Map<String, Object> getTypeConstants() {
                 return Collections.unmodifiableMap(new HashMap<String, Object>() {
                     {
-                        put("front", RCT_CAMERA_TYPE_FRONT);
-                        put("back", RCT_CAMERA_TYPE_BACK);
+                        put("front", AE_CAMERA_TYPE_FRONT);
+                        put("back", AE_CAMERA_TYPE_BACK);
                     }
                 });
             }
@@ -129,14 +129,14 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             private Map<String, Object> getCaptureQualityConstants() {
                 return Collections.unmodifiableMap(new HashMap<String, Object>() {
                     {
-                        put("low", RCT_CAMERA_CAPTURE_QUALITY_LOW);
-                        put("medium", RCT_CAMERA_CAPTURE_QUALITY_MEDIUM);
-                        put("high", RCT_CAMERA_CAPTURE_QUALITY_HIGH);
-                        put("photo", RCT_CAMERA_CAPTURE_QUALITY_HIGH);
-                        put("preview", RCT_CAMERA_CAPTURE_QUALITY_PREVIEW);
-                        put("480p", RCT_CAMERA_CAPTURE_QUALITY_480P);
-                        put("720p", RCT_CAMERA_CAPTURE_QUALITY_720P);
-                        put("1080p", RCT_CAMERA_CAPTURE_QUALITY_1080P);
+                        put("low", AE_CAMERA_CAPTURE_QUALITY_LOW);
+                        put("medium", AE_CAMERA_CAPTURE_QUALITY_MEDIUM);
+                        put("high", AE_CAMERA_CAPTURE_QUALITY_HIGH);
+                        put("photo", AE_CAMERA_CAPTURE_QUALITY_HIGH);
+                        put("preview", AE_CAMERA_CAPTURE_QUALITY_PREVIEW);
+                        put("480p", AE_CAMERA_CAPTURE_QUALITY_480P);
+                        put("720p", AE_CAMERA_CAPTURE_QUALITY_720P);
+                        put("1080p", AE_CAMERA_CAPTURE_QUALITY_1080P);
                     }
                 });
             }
@@ -144,8 +144,8 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             private Map<String, Object> getCaptureModeConstants() {
                 return Collections.unmodifiableMap(new HashMap<String, Object>() {
                     {
-                        put("still", RCT_CAMERA_CAPTURE_MODE_STILL);
-                        put("video", RCT_CAMERA_CAPTURE_MODE_VIDEO);
+                        put("still", AE_CAMERA_CAPTURE_MODE_STILL);
+                        put("video", AE_CAMERA_CAPTURE_MODE_VIDEO);
                     }
                 });
             }
@@ -153,10 +153,10 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             private Map<String, Object> getCaptureTargetConstants() {
                 return Collections.unmodifiableMap(new HashMap<String, Object>() {
                     {
-                        put("memory", RCT_CAMERA_CAPTURE_TARGET_MEMORY);
-                        put("disk", RCT_CAMERA_CAPTURE_TARGET_DISK);
-                        put("cameraRoll", RCT_CAMERA_CAPTURE_TARGET_CAMERA_ROLL);
-                        put("temp", RCT_CAMERA_CAPTURE_TARGET_TEMP);
+                        put("memory", AE_CAMERA_CAPTURE_TARGET_MEMORY);
+                        put("disk", AE_CAMERA_CAPTURE_TARGET_DISK);
+                        put("cameraRoll", AE_CAMERA_CAPTURE_TARGET_CAMERA_ROLL);
+                        put("temp", AE_CAMERA_CAPTURE_TARGET_TEMP);
                     }
                 });
             }
@@ -164,11 +164,11 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             private Map<String, Object> getOrientationConstants() {
                 return Collections.unmodifiableMap(new HashMap<String, Object>() {
                     {
-                        put("auto", RCT_CAMERA_ORIENTATION_AUTO);
-                        put("landscapeLeft", RCT_CAMERA_ORIENTATION_LANDSCAPE_LEFT);
-                        put("landscapeRight", RCT_CAMERA_ORIENTATION_LANDSCAPE_RIGHT);
-                        put("portrait", RCT_CAMERA_ORIENTATION_PORTRAIT);
-                        put("portraitUpsideDown", RCT_CAMERA_ORIENTATION_PORTRAIT_UPSIDE_DOWN);
+                        put("auto", AE_CAMERA_ORIENTATION_AUTO);
+                        put("landscapeLeft", AE_CAMERA_ORIENTATION_LANDSCAPE_LEFT);
+                        put("landscapeRight", AE_CAMERA_ORIENTATION_LANDSCAPE_RIGHT);
+                        put("portrait", AE_CAMERA_ORIENTATION_PORTRAIT);
+                        put("portraitUpsideDown", AE_CAMERA_ORIENTATION_PORTRAIT_UPSIDE_DOWN);
                     }
                 });
             }
@@ -176,9 +176,9 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             private Map<String, Object> getFlashModeConstants() {
                 return Collections.unmodifiableMap(new HashMap<String, Object>() {
                     {
-                        put("off", RCT_CAMERA_FLASH_MODE_OFF);
-                        put("on", RCT_CAMERA_FLASH_MODE_ON);
-                        put("auto", RCT_CAMERA_FLASH_MODE_AUTO);
+                        put("off", AE_CAMERA_FLASH_MODE_OFF);
+                        put("on", AE_CAMERA_FLASH_MODE_ON);
+                        put("auto", AE_CAMERA_FLASH_MODE_AUTO);
                     }
                 });
             }
@@ -186,9 +186,9 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
             private Map<String, Object> getTorchModeConstants() {
                 return Collections.unmodifiableMap(new HashMap<String, Object>() {
                     {
-                        put("off", RCT_CAMERA_TORCH_MODE_OFF);
-                        put("on", RCT_CAMERA_TORCH_MODE_ON);
-                        put("auto", RCT_CAMERA_TORCH_MODE_AUTO);
+                        put("off", AE_CAMERA_TORCH_MODE_OFF);
+                        put("on", AE_CAMERA_TORCH_MODE_ON);
+                        put("auto", AE_CAMERA_TORCH_MODE_AUTO);
                     }
                 });
             }
@@ -220,7 +220,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void capture(final ReadableMap options, final Promise promise) {
-        CameraView cameraView = RCTCameraViewManager.getCameraView();
+        CameraView cameraView = CameraViewManager.getCameraView();
         if (null == cameraView) {
             promise.reject("No camera found.");
             return;
@@ -232,7 +232,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
         }
 
         if (options.hasKey("quality")) {
-            RCTCameraViewManager.getInstance().setCaptureQuality(cameraView, options.getString("quality"));
+            CameraViewManager.getInstance().setCaptureQuality(cameraView, options.getString("quality"));
         }
 
         cameraView.addCallback(new CameraView.Callback() {
@@ -289,13 +289,13 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
         }
 
         switch (options.getInt("target")) {
-            case RCT_CAMERA_CAPTURE_TARGET_MEMORY:
+            case AE_CAMERA_CAPTURE_TARGET_MEMORY:
                 String encoded = mutableImage.toBase64(jpegQualityPercent);
                 WritableMap response = new WritableNativeMap();
                 response.putString("data", encoded);
                 promise.resolve(response);
                 break;
-            case RCT_CAMERA_CAPTURE_TARGET_CAMERA_ROLL: {
+            case AE_CAMERA_CAPTURE_TARGET_CAMERA_ROLL: {
                 File cameraRollFile = getOutputCameraRollFile(MEDIA_TYPE_IMAGE);
                 if (cameraRollFile == null) {
                     promise.reject("Error creating media file.");
@@ -315,7 +315,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
 
                 break;
             }
-            case RCT_CAMERA_CAPTURE_TARGET_DISK: {
+            case AE_CAMERA_CAPTURE_TARGET_DISK: {
                 File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
                 if (pictureFile == null) {
                     promise.reject("Error creating media file.");
@@ -333,7 +333,7 @@ public class RCTCameraModule extends ReactContextBaseJavaModule {
 
                 break;
             }
-            case RCT_CAMERA_CAPTURE_TARGET_TEMP: {
+            case AE_CAMERA_CAPTURE_TARGET_TEMP: {
                 File tempFile = getTempMediaFile(MEDIA_TYPE_IMAGE);
                 if (tempFile == null) {
                     promise.reject("Error creating media file.");

@@ -1,4 +1,4 @@
-package com.lwansbrough.RCTCamera;
+package com.appfolio.react.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,7 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class MutableImage {
-    private static final String TAG = "RNCamera";
+    private static final String TAG = "AEMutableImage";
 
     private final byte[] originalImageData;
     private Bitmap currentRepresentation;
