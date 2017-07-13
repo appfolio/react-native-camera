@@ -1,3 +1,3 @@
 #import <UIKit/UIKit.h>
-@interface RCTCameraFocusSquare : UIView
+@interface AECameraFocusSquare : UIView
 @end

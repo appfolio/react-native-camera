@@ -1,4 +1,4 @@
-package com.lwansbrough.RCTCamera;
+package com.appfolio.react.camera;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,11 +10,11 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 
-public class RCTCameraPackage implements ReactPackage {
+public class CameraPackage implements ReactPackage {
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
-        return Collections.<NativeModule>singletonList(new RCTCameraModule(reactApplicationContext));
+        return Collections.<NativeModule>singletonList(new CameraModule(reactApplicationContext));
     }
 
     @Override
@@ -25,7 +25,7 @@ public class RCTCameraPackage implements ReactPackage {
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactApplicationContext) {
         //noinspection ArraysAsListWithZeroOrOneArgument
-        return Collections.<ViewManager>singletonList(new RCTCameraViewManager());
+        return Collections.<ViewManager>singletonList(new CameraViewManager());
     }
 
 }

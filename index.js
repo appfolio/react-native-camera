@@ -10,7 +10,7 @@ import {
   ViewPropTypes
 } from 'react-native';
 
-const CameraManager = NativeModules.CameraManager || NativeModules.CameraModule;
+const CameraManager = NativeModules.AECameraManager || NativeModules.AECameraModule;
 const CAMERA_REF = 'camera';
 
 function convertNativeProps(props) {
@@ -42,7 +42,7 @@ function convertNativeProps(props) {
   if (typeof props.captureMode === 'string') {
     newProps.captureMode = Camera.constants.CaptureMode[props.captureMode];
   }
-  
+
   if (typeof props.captureTarget === 'string') {
     newProps.captureTarget = Camera.constants.CaptureTarget[props.captureTarget];
   }
@@ -200,7 +200,7 @@ export default class Camera extends Component {
     const style = [styles.base, this.props.style];
     const nativeProps = convertNativeProps(this.props);
 
-    return <RCTCamera ref={CAMERA_REF} {...nativeProps} />;
+    return <NativeCamera ref={CAMERA_REF} {...nativeProps} />;
   }
 
   _onBarCodeRead = (data) => {
@@ -260,15 +260,17 @@ export default class Camera extends Component {
 
 export const constants = Camera.constants;
 
-const RCTCamera = requireNativeComponent('RCTCamera', Camera, {nativeOnly: {
-  testID: true,
-  renderToHardwareTextureAndroid: true,
-  accessibilityLabel: true,
-  importantForAccessibility: true,
-  accessibilityLiveRegion: true,
-  accessibilityComponentType: true,
-  onLayout: true
-}});
+const NativeCamera = requireNativeComponent('AECamera', Camera, {
+  nativeOnly: {
+    testID: true,
+    renderToHardwareTextureAndroid: true,
+    accessibilityLabel: true,
+    importantForAccessibility: true,
+    accessibilityLiveRegion: true,
+    accessibilityComponentType: true,
+    onLayout: true
+  }
+});
 
 const styles = StyleSheet.create({
   base: {},

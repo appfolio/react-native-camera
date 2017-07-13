@@ -1,6 +1,6 @@
 //
-//  RCTSensorOrientationChecker.h
-//  RCTCamera
+//  AESensorOrientationChecker.h
+//  AECamera
 //
 //  Created by Radu Popovici on 24/03/16.
 //
@@ -11,7 +11,7 @@
 
 typedef void (^RCTSensorCallback) (UIInterfaceOrientation orientation);
 
-@interface RCTSensorOrientationChecker : NSObject
+@interface AESensorOrientationChecker : NSObject
 
 @property (assign, nonatomic) UIInterfaceOrientation orientation;
 

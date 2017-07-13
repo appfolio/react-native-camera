@@ -2,7 +2,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 const float squareLength = 80.0f;
-@implementation RCTCameraFocusSquare
+@implementation AECameraFocusSquare
 
 - (id)initWithFrame:(CGRect)frame 
 {

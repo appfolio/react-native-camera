@@ -1,6 +1,6 @@
 //
 //  NSMutableDictionary+ImageMetadata.m
-//  RCTCamera
+//  AECamera
 //
 //  Created by Jehan Tremback on 7/10/15.
 //
