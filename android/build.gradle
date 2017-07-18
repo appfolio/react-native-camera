@@ -36,5 +36,5 @@ dependencies {
   compile "com.facebook.react:react-native:0.19.+"
   compile "com.google.zxing:core:3.2.1"
   compile "com.drewnoakes:metadata-extractor:2.9.1"
-  compile "com.github.appfolio:cameraview:a2f6e4302f4c49206fb4a5d9c1ff3fd677d30a8d"
+  compile "com.github.appfolio:cameraview:d70efaf465ce0ddfcb3907a902bbb9e4c0426c95"
 }
