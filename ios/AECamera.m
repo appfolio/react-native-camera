@@ -117,9 +117,30 @@
   [UIApplication sharedApplication].idleTimerDisabled = _previousIdleTimerDisabled;
 }
 
-- (void)orientationChanged:(NSNotification *)notification{
-  UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-  [self changePreviewOrientation:orientation];
+- (void)orientationChanged:(NSNotification *)notification {
+    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+
+    AVCaptureVideoOrientation newPreviewOrientation = 0;
+    switch (deviceOrientation) {
+        case UIDeviceOrientationPortrait:
+            newPreviewOrientation = AVCaptureVideoOrientationPortrait;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            newPreviewOrientation = AVCaptureVideoOrientationLandscapeRight;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            newPreviewOrientation = AVCaptureVideoOrientationLandscapeLeft;
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            newPreviewOrientation = AVCaptureVideoOrientationPortraitUpsideDown;
+            break;
+        default:
+            break;
+    }
+    
+    if (newPreviewOrientation) {
+        [self changePreviewOrientation:newPreviewOrientation];
+    }
 }
 
 
